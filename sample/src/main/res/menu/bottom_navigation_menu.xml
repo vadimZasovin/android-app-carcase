@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/car"
+        android:title="@string/car"
+        android:icon="@drawable/ic_drive_eta_black_24dp"/>
+    <item
+        android:id="@+id/printer"
+        android:title="@string/printer"
+        android:icon="@drawable/ic_local_printshop_black_24dp"/>
+    <item
+        android:id="@+id/weekend"
+        android:title="@string/weekend"
+        android:icon="@drawable/ic_weekend_black_24dp"/>
+    <item
+        android:id="@+id/beach"
+        android:title="@string/beach"
+        android:icon="@drawable/ic_beach_access_black_24dp"/>
+    <item
+        android:id="@+id/blackStar"
+        android:title="@string/black_star"
+        android:icon="@drawable/ic_star_black_24dp"/>
+</menu>

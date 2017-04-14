@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AndroidAppCarcase</string>
+    <string name="car">Car</string>
+    <string name="printer">Printer</string>
+    <string name="weekend">Weekend</string>
+    <string name="beach">Beach</string>
+    <string name="black_star">Black Star</string>
+</resources>
