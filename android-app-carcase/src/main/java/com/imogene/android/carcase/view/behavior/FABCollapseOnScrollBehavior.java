@@ -1,6 +1,5 @@
 package com.imogene.android.carcase.view.behavior;
 
-import android.animation.Animator;
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -13,7 +12,7 @@ import android.view.View;
  */
 
 public class FABCollapseOnScrollBehavior extends FloatingActionButton.Behavior
-        implements Animator.AnimatorListener{
+        implements Runnable{
 
     private View mView;
 
@@ -47,24 +46,15 @@ public class FABCollapseOnScrollBehavior extends FloatingActionButton.Behavior
                 .scaleX(0).scaleY(0)
                 .alpha(.5f).alpha(.5f)
                 .setDuration(200)
-                .setListener(this);
+                .withEndAction(this);
     }
 
     @Override
-    public void onAnimationStart(Animator animation) {}
-
-    @Override
-    public void onAnimationEnd(Animator animation) {
+    public void run() {
         if(mView != null){
             mView.setVisibility(View.INVISIBLE);
         }
     }
-
-    @Override
-    public void onAnimationCancel(Animator animation) {}
-
-    @Override
-    public void onAnimationRepeat(Animator animation) {}
 
     private void show(View view){
         view.setVisibility(View.VISIBLE);
