@@ -18,6 +18,11 @@ import com.imogene.android.carcase.controller.BottomNavigationActivity;
 public class SampleBottomNavigationActivity extends BottomNavigationActivity {
 
     @Override
+    protected int getLayoutRes() {
+        return R.layout.activity_sample_bottom_navigation;
+    }
+
+    @Override
     protected Fragment createFragment(Intent intent) {
         return SampleFragment.newInstance();
     }
@@ -45,10 +50,5 @@ public class SampleBottomNavigationActivity extends BottomNavigationActivity {
         ColorStateList tintList = new ColorStateList(stateSets, colors);
         navigationView.setItemIconTintList(tintList);
         navigationView.setItemTextColor(tintList);
-    }
-
-    @Override
-    protected int getMode() {
-        return MODE_FLOATING;
     }
 }

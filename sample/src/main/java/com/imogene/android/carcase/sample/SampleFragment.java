@@ -51,7 +51,8 @@ public class SampleFragment extends BaseFragment {
         @Override
         public void onBindViewHolder(SampleViewHolder holder, int position) {
             TextView textView = (TextView) holder.itemView;
-            textView.setText("Item " + position + 1);
+            String text = "Item" + (position + 1);
+            textView.setText(text);
         }
 
         @Override
