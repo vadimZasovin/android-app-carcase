@@ -9,4 +9,10 @@
     <string name="slide_on_scroll_behavior">
         com.imogene.android.carcase.view.behavior.SlideOnScrollBehavior
     </string>
+    <string name="fab_slide_fade_on_scroll_behavior">
+        com.imogene.android.carcase.view.behavior.FABSlideFadeOnScrollBehavior
+    </string>
+    <string name="fab_slide_collapse_on_scroll_behavior">
+        com.imogene.android.carcase.view.behavior.FABSlideCollapseOnScrollBehavior
+    </string>
 </resources>

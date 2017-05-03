@@ -6,22 +6,24 @@ import android.view.View;
 import android.view.ViewPropertyAnimator;
 
 /**
- * Created by Admin on 13.04.2017.
+ * Created by Admin on 03.05.2017.
  */
 
-public class FABCollapseOnScrollBehavior extends FABReactOnScrollBehavior{
+public class FABSlideFadeOnScrollBehavior extends FABSlideOnScrollBehavior {
 
-    public FABCollapseOnScrollBehavior(Context context, AttributeSet attributeSet){
+    public FABSlideFadeOnScrollBehavior(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
     }
 
     @Override
     protected void hide(View view, ViewPropertyAnimator animator) {
-        animator.scaleX(0).scaleY(0).alpha(.5f).alpha(.5f);
+        super.hide(view, animator);
+        animator.alpha(.3f);
     }
 
     @Override
     protected void show(View view, ViewPropertyAnimator animator) {
-        animator.scaleX(1).scaleY(1).alpha(1).alpha(1);
+        super.show(view, animator);
+        animator.alpha(1f);
     }
 }

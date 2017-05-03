@@ -5,17 +5,18 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewPropertyAnimator;
 
 /**
  * Created by Admin on 13.04.2017.
  */
 
-public class FABSlideOnScrollBehavior extends FloatingActionButton.Behavior{
+public class FABSlideOnScrollBehavior extends FABReactOnScrollBehavior{
 
     private final SlideOnScrollBehavior wrappedBehavior;
 
     public FABSlideOnScrollBehavior(Context context, AttributeSet attributeSet){
-        super();
+        super(context, attributeSet);
         wrappedBehavior = new SlideOnScrollBehavior(context, attributeSet);
     }
 
@@ -37,4 +38,10 @@ public class FABSlideOnScrollBehavior extends FloatingActionButton.Behavior{
                 coordinatorLayout, child, target, dxConsumed,
                 dyConsumed, dxUnconsumed, dyUnconsumed);
     }
+
+    @Override
+    protected void hide(View view, ViewPropertyAnimator animator) {}
+
+    @Override
+    protected void show(View view, ViewPropertyAnimator animator) {}
 }
