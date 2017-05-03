@@ -53,7 +53,6 @@ public class ApiCore {
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder();
         retrofitBuilder
                 .baseUrl(builder.baseUrl)
-                .addConverterFactory(ScalarsConverterFactory.create())
                 .client(clientBuilder.build())
                 .build();
 
@@ -149,15 +148,18 @@ public class ApiCore {
             }
         }
 
-        public Builder prepareGsonConverterFactory(Gson gson){
+        public Builder addGsonConverterFactory(Gson gson){
             GsonConverterFactory factory = GsonConverterFactory.create(gson);
-            ensureConverterFactories();
-            converterFactories.add(factory);
-            return this;
+            return addConverterFactory(factory);
         }
 
-        public Builder prepareGsonConverterFactory(){
-            return prepareGsonConverterFactory(new Gson());
+        public Builder addGsonConverterFactory(){
+            return addGsonConverterFactory(new Gson());
+        }
+
+        public Builder addScalarsConverterFactory(){
+            ScalarsConverterFactory factory = ScalarsConverterFactory.create();
+            return addConverterFactory(factory);
         }
 
         public ApiCore build(){
