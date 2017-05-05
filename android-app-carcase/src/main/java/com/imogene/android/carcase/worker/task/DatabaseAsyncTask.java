@@ -1,4 +1,4 @@
-package com.imogene.android.carcase.worker;
+package com.imogene.android.carcase.worker.task;
 
 import com.imogene.android.carcase.exception.RuntimeSQLException;
 

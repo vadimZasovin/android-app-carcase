@@ -1,4 +1,4 @@
-package com.imogene.android.carcase.worker;
+package com.imogene.android.carcase.worker.loader;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
