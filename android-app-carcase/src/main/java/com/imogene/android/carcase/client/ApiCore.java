@@ -27,12 +27,6 @@ public class ApiCore {
     private ApiCore(Builder builder){
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
 
-        if(builder.loggingEnabled){
-            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            clientBuilder.addInterceptor(loggingInterceptor);
-        }
-
         List<Interceptor> interceptors = builder.interceptors;
         if(interceptors != null && !interceptors.isEmpty()){
             for(Interceptor interceptor : interceptors){
@@ -73,7 +67,6 @@ public class ApiCore {
     public static final class Builder{
 
         private String baseUrl;
-        private boolean loggingEnabled;
         private long readTimeout;
         private TimeUnit readTimeoutTimeUnit;
         private long writeTimeout;
@@ -83,7 +76,6 @@ public class ApiCore {
         private List<Converter.Factory> converterFactories;
 
         public Builder(){
-            loggingEnabled = true;
             readTimeout = 15;
             readTimeoutTimeUnit = TimeUnit.SECONDS;
             writeTimeout = 10;
@@ -95,9 +87,14 @@ public class ApiCore {
             return this;
         }
 
-        public Builder loggingEnabled(boolean loggingEnabled){
-            this.loggingEnabled = loggingEnabled;
-            return this;
+        public Builder enableLogging(HttpLoggingInterceptor.Logger logger){
+            HttpLoggingInterceptor interceptor;
+            if(logger != null){
+                interceptor = new HttpLoggingInterceptor(logger);
+            }else {
+                interceptor = new HttpLoggingInterceptor();
+            }
+            return addInterceptor(interceptor);
         }
 
         public Builder readTimeout(long timeout, TimeUnit timeUnit){
