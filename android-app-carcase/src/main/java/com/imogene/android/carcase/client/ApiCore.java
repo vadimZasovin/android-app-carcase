@@ -94,6 +94,7 @@ public class ApiCore {
             }else {
                 interceptor = new HttpLoggingInterceptor();
             }
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             return addInterceptor(interceptor);
         }
 
