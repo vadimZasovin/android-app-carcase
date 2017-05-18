@@ -97,16 +97,8 @@ public class ApiCore {
             return addInterceptor(interceptor);
         }
 
-        public Builder readTimeout(long timeout, TimeUnit timeUnit){
-            this.readTimeout = timeout;
-            this.readTimeoutTimeUnit = timeUnit;
-            return this;
-        }
-
-        public Builder writeTimeout(long timeout, TimeUnit timeUnit){
-            this.writeTimeout = timeout;
-            this.writeTimeoutTimeUnit = timeUnit;
-            return this;
+        public Builder enableLogging(){
+            return enableLogging(null);
         }
 
         public Builder addInterceptor(Interceptor interceptor){
@@ -131,6 +123,18 @@ public class ApiCore {
             if(networkInterceptors == null){
                 networkInterceptors = new ArrayList<>();
             }
+        }
+
+        public Builder readTimeout(long timeout, TimeUnit timeUnit){
+            this.readTimeout = timeout;
+            this.readTimeoutTimeUnit = timeUnit;
+            return this;
+        }
+
+        public Builder writeTimeout(long timeout, TimeUnit timeUnit){
+            this.writeTimeout = timeout;
+            this.writeTimeoutTimeUnit = timeUnit;
+            return this;
         }
 
         public Builder addConverterFactory(Converter.Factory factory){
