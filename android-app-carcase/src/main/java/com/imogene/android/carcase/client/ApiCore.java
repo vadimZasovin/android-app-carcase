@@ -23,6 +23,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class ApiCore {
 
     private final Retrofit retrofit;
+    private final OkHttpClient client;
 
     private ApiCore(Builder builder){
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
@@ -44,10 +45,12 @@ public class ApiCore {
         clientBuilder.readTimeout(builder.readTimeout, builder.readTimeoutTimeUnit);
         clientBuilder.writeTimeout(builder.writeTimeout, builder.writeTimeoutTimeUnit);
 
+        client = clientBuilder.build();
+
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder();
         retrofitBuilder
                 .baseUrl(builder.baseUrl)
-                .client(clientBuilder.build())
+                .client(client)
                 .build();
 
         List<Converter.Factory> converterFactories = builder.converterFactories;
@@ -62,6 +65,10 @@ public class ApiCore {
 
     public <T> T createApi(Class<T> clazz){
         return retrofit.create(clazz);
+    }
+
+    public OkHttpClient getClient(){
+        return client;
     }
 
     public static final class Builder{

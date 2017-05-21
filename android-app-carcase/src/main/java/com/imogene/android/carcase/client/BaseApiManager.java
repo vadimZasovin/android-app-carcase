@@ -6,6 +6,7 @@ import com.imogene.android.carcase.exception.RequestException;
 
 import java.io.IOException;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -15,7 +16,7 @@ import retrofit2.Response;
 
 public abstract class BaseApiManager {
 
-    protected final ApiCore apiCore;
+    private final ApiCore apiCore;
 
     public BaseApiManager(){
         apiCore = createApiCore();
@@ -26,6 +27,10 @@ public abstract class BaseApiManager {
 
     protected final <T> T createApi(Class<T> clazz){
         return apiCore.createApi(clazz);
+    }
+
+    protected final OkHttpClient getClient(){
+        return apiCore.getClient();
     }
 
     protected <T> T executeCall(Call<T> call) throws RequestException{
