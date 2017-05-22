@@ -155,7 +155,13 @@ public abstract class BaseLoader<D> extends AsyncTaskLoader<D> {
     @Override
     public void deliverResult(D data) {
         super.deliverResult(data);
-        this.data = data;
+        if(shouldStoreData()){
+            this.data = data;
+        }
+    }
+
+    protected boolean shouldStoreData(){
+        return true;
     }
 
     public final int getSource(){
