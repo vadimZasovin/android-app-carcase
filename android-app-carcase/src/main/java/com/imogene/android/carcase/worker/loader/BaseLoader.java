@@ -27,7 +27,7 @@ public abstract class BaseLoader<D> extends AsyncTaskLoader<D> {
     private final long minDuration;
     private volatile boolean minDurationEnabled;
     private String errorMessage;
-    private D data;
+    protected D data;
 
     public BaseLoader(Context context, int source, long minDuration) {
         super(context);
@@ -155,13 +155,7 @@ public abstract class BaseLoader<D> extends AsyncTaskLoader<D> {
     @Override
     public void deliverResult(D data) {
         super.deliverResult(data);
-        if(shouldStoreData(data)){
-            this.data = data;
-        }
-    }
-
-    protected boolean shouldStoreData(D data){
-        return true;
+        this.data = data;
     }
 
     public final int getSource(){
