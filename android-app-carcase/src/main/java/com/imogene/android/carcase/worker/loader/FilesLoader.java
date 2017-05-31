@@ -19,6 +19,8 @@ import java.io.OutputStream;
 
 public class FilesLoader extends BaseLoader<FilesLoader.Result> {
 
+    public static final String EXTRA_URI = "com.imogene.android.carcase.EXTRA_URI";
+
     private static final int SOURCE_CUSTOM = 4;
 
     private final Uri uri;
