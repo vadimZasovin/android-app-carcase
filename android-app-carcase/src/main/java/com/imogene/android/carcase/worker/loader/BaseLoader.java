@@ -79,7 +79,7 @@ public abstract class BaseLoader<D> extends AsyncTaskLoader<D> {
                     data = loadFromDatabase();
                     break;
                 default:
-                    throw new IllegalStateException("Unsupported source: " + source);
+                    data = loadFromCustomSource(source);
             }
         }catch (SQLException e){
             throw new RuntimeSQLException(e);
@@ -104,18 +104,19 @@ public abstract class BaseLoader<D> extends AsyncTaskLoader<D> {
     }
 
     protected D loadFromServer() throws RequestException{
-        throw new UnsupportedOperationException(
-                "This method must be overridden without calling through super class implementation");
+        throw new UnsupportedOperationException("This method must be overridden without calling through the super class implementation");
     }
 
     protected void saveData(D data) throws SQLException {
-        throw new UnsupportedOperationException(
-                "This method must be overridden without calling through super class implementation");
+        throw new UnsupportedOperationException("This method must be overridden without calling through the super class implementation");
     }
 
     protected D loadFromDatabase() throws SQLException{
-        throw new UnsupportedOperationException(
-                "This method must be overridden without calling through super class implementation");
+        throw new UnsupportedOperationException("This method must be overridden without calling through the super class implementation");
+    }
+
+    protected D loadFromCustomSource(int source){
+        throw new UnsupportedOperationException("This method must be overridden without calling through the super class implementation");
     }
 
     protected D handleRequestException(RequestException e){
