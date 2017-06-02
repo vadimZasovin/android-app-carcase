@@ -128,4 +128,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         transaction.replace(getContentFragmentId(), fragment);
         transaction.commit();
     }
+
+    public final int requestPermission(String permission, boolean withExplanation, int requestCode){
+        return AppUtils.Permissions.requestPermission(this, requestCode, withExplanation, permission);
+    }
 }

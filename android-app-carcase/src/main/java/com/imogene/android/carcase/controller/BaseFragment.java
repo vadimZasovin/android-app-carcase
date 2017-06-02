@@ -173,4 +173,8 @@ public abstract class BaseFragment extends Fragment implements OnBackPressListen
     public void replaceContentFragment(Fragment fragment){
         activity.replaceContentFragment(fragment);
     }
+
+    public final int requestPermission(String permission, boolean withExplanation, int requestCode){
+        return AppUtils.Permissions.requestPermission(this, requestCode, withExplanation, permission);
+    }
 }

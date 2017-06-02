@@ -2,11 +2,14 @@ package com.imogene.android.carcase;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -77,6 +80,44 @@ public final class AppUtils {
             Resources resources = context.getResources();
             DisplayMetrics displayMetrics = resources.getDisplayMetrics();
             return dps * displayMetrics.density;
+        }
+    }
+
+    public static final class Permissions{
+
+        public static final int RESULT_HAS_PERMISSION = 0;
+        public static final int RESULT_HAS_NOT_PERMISSION = 1;
+        public static final int RESULT_SHOW_EXPLANATION = 2;
+
+        private Permissions(){}
+
+        public static int requestPermission(Activity activity, int requestCode,
+                                            boolean withExplanation, String permission){
+            if(ContextCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED){
+                if(withExplanation && ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)){
+                    return RESULT_SHOW_EXPLANATION;
+                }else {
+                    ActivityCompat.requestPermissions(activity, new String[]{permission}, requestCode);
+                    return RESULT_HAS_NOT_PERMISSION;
+                }
+            }else {
+                return RESULT_HAS_PERMISSION;
+            }
+        }
+
+        public static int requestPermission(Fragment fragment, int requestCode,
+                                            boolean withExplanation, String permission){
+            Context context = fragment.getActivity();
+            if(ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED){
+                if(withExplanation && fragment.shouldShowRequestPermissionRationale(permission)){
+                    return RESULT_SHOW_EXPLANATION;
+                }else {
+                    fragment.requestPermissions(new String[]{permission}, requestCode);
+                    return RESULT_HAS_NOT_PERMISSION;
+                }
+            }else {
+                return RESULT_HAS_PERMISSION;
+            }
         }
     }
 }
