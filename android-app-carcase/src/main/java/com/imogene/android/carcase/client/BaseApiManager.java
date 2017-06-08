@@ -18,7 +18,7 @@ public abstract class BaseApiManager {
 
     private final ApiCore apiCore;
 
-    public BaseApiManager(){
+    protected BaseApiManager(){
         apiCore = createApiCore();
     }
 
