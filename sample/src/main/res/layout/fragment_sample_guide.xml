@@ -11,12 +11,15 @@
         android:layout_height="match_parent"/>
 
     <com.imogene.android.carcase.view.CircleGuideStepView
-        style="@style/Widget.CircleGuideStepView.Filled"
+        style="@style/Widget.CircleGuideStepView.Bordered"
         android:id="@+id/guide_step_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="100dp"
-        app:cgsv_animation="fade"/>
+        app:cgsv_colorInactive="@android:color/holo_green_dark"
+        app:cgsv_borderWidthActive="4dp"
+        app:cgsv_borderWidthInactive="1dp"
+        app:cgsv_animation="border_width"/>
 
 </FrameLayout>

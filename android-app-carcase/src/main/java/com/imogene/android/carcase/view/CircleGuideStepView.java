@@ -442,7 +442,11 @@ public class CircleGuideStepView extends View implements GuideStepView {
         @Override
         void onUpdateProperty(ValueAnimator animation) {
             outWidth = (float) animation.getAnimatedValue();
-            inWidth = Math.abs(maxBorderSize - (float) animation.getAnimatedValue());
+            if(startWidth > endWidth){
+                inWidth = Math.max(startWidth - outWidth, endWidth);
+            }else {
+                inWidth = Math.min(Math.max(endWidth - outWidth, startWidth), endWidth);
+            }
         }
 
         @Override
