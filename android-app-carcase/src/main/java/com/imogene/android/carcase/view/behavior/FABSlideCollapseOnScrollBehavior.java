@@ -19,13 +19,13 @@ public class FABSlideCollapseOnScrollBehavior extends FABSlideOnScrollBehavior {
     }
 
     @Override
-    public void hide(View view, ViewPropertyAnimator animator) {
+    protected void hide(View view, ViewPropertyAnimator animator) {
         super.hide(view, animator);
         wrappedBehavior.hide(view, animator);
     }
 
     @Override
-    public void show(View view, ViewPropertyAnimator animator) {
+    protected void show(View view, ViewPropertyAnimator animator) {
         super.show(view, animator);
         wrappedBehavior.show(view, animator);
     }

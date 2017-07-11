@@ -16,7 +16,7 @@ public class SlideOnScrollBehavior extends ReactOnScrollBehavior{
     }
 
     @Override
-    public void hide(View child, View target, ViewPropertyAnimator animator) {
+    protected void hide(View child, View target, ViewPropertyAnimator animator) {
         float translationY = child.getTranslationY();
         int childBottom = child.getBottom();
         int childHeight = child.getHeight();
@@ -26,7 +26,7 @@ public class SlideOnScrollBehavior extends ReactOnScrollBehavior{
     }
 
     @Override
-    public void show(View child, ViewPropertyAnimator animator) {
+    protected void show(View child, ViewPropertyAnimator animator) {
         float translationY = child.getTranslationY();
         animator.translationYBy(-translationY);
     }

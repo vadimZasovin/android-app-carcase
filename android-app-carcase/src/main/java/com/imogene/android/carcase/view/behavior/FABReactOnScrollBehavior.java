@@ -41,7 +41,7 @@ public abstract class FABReactOnScrollBehavior extends FloatingActionButton.Beha
         }
     }
 
-    private void hide(View view){
+    public final void hide(View view){
         this.view = view;
         ViewPropertyAnimator animator = view.animate();
         hide(view, animator);
@@ -49,7 +49,7 @@ public abstract class FABReactOnScrollBehavior extends FloatingActionButton.Beha
         animator.withEndAction(this);
     }
 
-    public abstract void hide(View view, ViewPropertyAnimator animator);
+    protected abstract void hide(View view, ViewPropertyAnimator animator);
 
     @Override
     public void run() {
@@ -58,7 +58,7 @@ public abstract class FABReactOnScrollBehavior extends FloatingActionButton.Beha
         }
     }
 
-    private void show(View view){
+    public final void show(View view){
         this.view = view;
         view.setVisibility(View.VISIBLE);
         ViewPropertyAnimator animator = view.animate();
@@ -66,5 +66,5 @@ public abstract class FABReactOnScrollBehavior extends FloatingActionButton.Beha
         animator.setDuration(200);
     }
 
-    public abstract void show(View view, ViewPropertyAnimator animator);
+    protected abstract void show(View view, ViewPropertyAnimator animator);
 }

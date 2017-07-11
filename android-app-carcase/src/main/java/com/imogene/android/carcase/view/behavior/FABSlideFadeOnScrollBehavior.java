@@ -16,13 +16,13 @@ public class FABSlideFadeOnScrollBehavior extends FABSlideOnScrollBehavior {
     }
 
     @Override
-    public void hide(View view, ViewPropertyAnimator animator) {
+    protected void hide(View view, ViewPropertyAnimator animator) {
         super.hide(view, animator);
         animator.alpha(.3f);
     }
 
     @Override
-    public void show(View view, ViewPropertyAnimator animator) {
+    protected void show(View view, ViewPropertyAnimator animator) {
         super.show(view, animator);
         animator.alpha(1f);
     }
