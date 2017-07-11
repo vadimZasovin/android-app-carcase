@@ -16,12 +16,12 @@ public class FABCollapseOnScrollBehavior extends FABReactOnScrollBehavior{
     }
 
     @Override
-    protected void hide(View view, ViewPropertyAnimator animator) {
+    public void hide(View view, ViewPropertyAnimator animator) {
         animator.scaleX(0).scaleY(0).alpha(.5f).alpha(.5f);
     }
 
     @Override
-    protected void show(View view, ViewPropertyAnimator animator) {
+    public void show(View view, ViewPropertyAnimator animator) {
         animator.scaleX(1).scaleY(1).alpha(1).alpha(1);
     }
 }

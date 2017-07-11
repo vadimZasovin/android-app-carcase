@@ -40,8 +40,8 @@ public class FABSlideOnScrollBehavior extends FABReactOnScrollBehavior{
     }
 
     @Override
-    protected void hide(View view, ViewPropertyAnimator animator) {}
+    public void hide(View view, ViewPropertyAnimator animator) {}
 
     @Override
-    protected void show(View view, ViewPropertyAnimator animator) {}
+    public void show(View view, ViewPropertyAnimator animator) {}
 }

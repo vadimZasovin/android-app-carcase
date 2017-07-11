@@ -49,7 +49,7 @@ public abstract class FABReactOnScrollBehavior extends FloatingActionButton.Beha
         animator.withEndAction(this);
     }
 
-    protected abstract void hide(View view, ViewPropertyAnimator animator);
+    public abstract void hide(View view, ViewPropertyAnimator animator);
 
     @Override
     public void run() {
@@ -66,5 +66,5 @@ public abstract class FABReactOnScrollBehavior extends FloatingActionButton.Beha
         animator.setDuration(200);
     }
 
-    protected abstract void show(View view, ViewPropertyAnimator animator);
+    public abstract void show(View view, ViewPropertyAnimator animator);
 }

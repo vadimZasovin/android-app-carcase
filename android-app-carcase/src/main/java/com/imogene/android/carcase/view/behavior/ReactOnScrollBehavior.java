@@ -49,7 +49,7 @@ public abstract class ReactOnScrollBehavior extends CoordinatorLayout.Behavior<V
         animator.withEndAction(this);
     }
 
-    protected abstract void hide(View child, View target, ViewPropertyAnimator animator);
+    public abstract void hide(View child, View target, ViewPropertyAnimator animator);
 
     private void show(View child){
         this.child = child;
@@ -59,7 +59,7 @@ public abstract class ReactOnScrollBehavior extends CoordinatorLayout.Behavior<V
         animator.withStartAction(this);
     }
 
-    protected abstract void show(View child, ViewPropertyAnimator animator);
+    public abstract void show(View child, ViewPropertyAnimator animator);
 
     @Override
     public final void run() {
