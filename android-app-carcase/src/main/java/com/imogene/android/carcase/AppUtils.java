@@ -91,6 +91,10 @@ public final class AppUtils {
 
         private Permissions(){}
 
+        public static boolean checkPermission(Context context, String permission){
+            return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
+        }
+
         public static int requestPermission(Activity activity, int requestCode,
                                             boolean withExplanation, String permission){
             if(ContextCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED){
