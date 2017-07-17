@@ -166,4 +166,8 @@ public abstract class BaseLoader<D> extends AsyncTaskLoader<D> {
     public final String getErrorMessage(){
         return errorMessage;
     }
+
+    public final void setData(D data){
+        this.data = data;
+    }
 }
