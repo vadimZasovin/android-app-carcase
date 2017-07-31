@@ -269,6 +269,10 @@ public class FilesLoader extends BaseLoader<FilesLoader.Result> {
             return items.get(index);
         }
 
+        public int getItemsCount(){
+            return items.size();
+        }
+
         @Override
         public Iterator<Item> iterator() {
 
