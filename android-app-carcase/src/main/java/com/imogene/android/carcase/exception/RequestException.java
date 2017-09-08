@@ -10,11 +10,8 @@ public class RequestException extends IOException {
 
     private final int errorCode;
 
-    public RequestException(Throwable cause) {
+    public RequestException(IOException cause) {
         super(cause);
-        if(!(cause instanceof IOException)){
-            throw new IllegalArgumentException("The cause must be an instance of IOException");
-        }
         errorCode = 0;
     }
 
