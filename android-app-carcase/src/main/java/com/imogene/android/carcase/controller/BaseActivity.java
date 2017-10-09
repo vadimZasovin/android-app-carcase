@@ -2,6 +2,7 @@ package com.imogene.android.carcase.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.AnimRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -122,9 +123,25 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void replaceContentFragment(Fragment fragment){
+        replaceContentFragment(fragment, R.anim.fade_in, R.anim.fade_out);
+    }
+
+    public void replaceContentFragment(Fragment fragment,
+                                       @AnimRes int enterAnim,
+                                       @AnimRes int exitAnim){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        transaction.setCustomAnimations(enterAnim, exitAnim);
+        transaction.replace(getContentFragmentId(), fragment);
+        transaction.commit();
+    }
+
+    public void replaceContentFragment(Fragment fragment,
+                                       @AnimRes int enterAnim, @AnimRes int exitAnim,
+                                       @AnimRes int popEnterAnim, @AnimRes int popExitAnim){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(enterAnim, exitAnim, popEnterAnim, popExitAnim);
         transaction.replace(getContentFragmentId(), fragment);
         transaction.commit();
     }
