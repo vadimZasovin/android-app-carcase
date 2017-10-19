@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">CarcaseController</string>
+
+    <string name="fab_collapse_on_scroll_behavior">
+        com.imogene.android.carcase.controller.behavior.FABCollapseOnScrollBehavior
+    </string>
+    <string name="fab_slide_on_scroll_behavior">
+        com.imogene.android.carcase.controller.behavior.FABSlideOnScrollBehavior
+    </string>
+    <string name="slide_on_scroll_behavior">
+        com.imogene.android.carcase.controller.behavior.SlideOnScrollBehavior
+    </string>
+    <string name="fab_slide_fade_on_scroll_behavior">
+        com.imogene.android.carcase.controller.behavior.FABSlideFadeOnScrollBehavior
+    </string>
+    <string name="fab_slide_collapse_on_scroll_behavior">
+        com.imogene.android.carcase.controller.behavior.FABSlideCollapseOnScrollBehavior
+    </string>
+</resources>
