@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/vadimZasovin/android-app-carcase'
     gitUrl = 'https://github.com/vadimZasovin/android-app-carcase.git'
 
-    libraryVersion = '3.0'
+    libraryVersion = '3.5'
 
     developerId = 'vadimzasovin'
     developerName = 'Vadim Zasovin'
@@ -45,8 +45,8 @@ android {
 }
 
 dependencies {
-    api project(':carcase-commons')
-    api 'com.android.support:design:26.1.0'
+    compile project(':carcase-commons')
+    compile 'com.android.support:design:26.1.0'
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

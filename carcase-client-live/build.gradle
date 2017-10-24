@@ -15,7 +15,7 @@ ext {
     siteUrl = 'https://github.com/vadimZasovin/android-app-carcase'
     gitUrl = 'https://github.com/vadimZasovin/android-app-carcase.git'
 
-    libraryVersion = '3.0'
+    libraryVersion = '3.0-alpha1'
 
     developerId = 'vadimzasovin'
     developerName = 'Vadim Zasovin'
@@ -53,8 +53,8 @@ dokka {
 }
 
 dependencies {
-    api project(':carcase-client')
-    api "android.arch.lifecycle:extensions:1.0.0-beta2"
+    compile project(':carcase-client')
+    compile "android.arch.lifecycle:extensions:1.0.0-beta2"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 
