@@ -15,7 +15,7 @@ ext {
     siteUrl = 'https://github.com/vadimZasovin/android-app-carcase'
     gitUrl = 'https://github.com/vadimZasovin/android-app-carcase.git'
 
-    libraryVersion = '3.0-alpha2'
+    libraryVersion = '3.0-alpha3'
 
     developerId = 'vadimzasovin'
     developerName = 'Vadim Zasovin'

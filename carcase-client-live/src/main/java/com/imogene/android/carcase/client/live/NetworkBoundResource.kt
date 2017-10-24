@@ -44,31 +44,28 @@ abstract class NetworkBoundResource<T> {
             dispatchResource(Resource.loading(Source.NETWORK, it))
         }
         _liveData.addSource(networkSource){
+            if(it == null || it.status == Status.LOADING){
+                return@addSource
+            }
             _liveData.removeSource(cacheSource)
             _liveData.removeSource(networkSource)
-            if(it != null){
-                if(it.status == Status.SUCCESS){
-                    val data = it.data
-                    if(data != null){
-                        saveResultAndReInit(data)
-                    }
-                }else{
-                    onRefreshFailed()
-                    @Suppress("UnnecessaryVariable")
-                    val errorResource = it
-                    _liveData.addSource(cacheSource){
-                        dispatchResource(Resource.from(errorResource, it))
-                    }
+            if(it.status == Status.SUCCESS){
+                val data = it.data
+                if(data != null){
+                    saveResultAndReInit(data)
+                }
+            }else{
+                onRefreshFailed()
+                @Suppress("UnnecessaryVariable")
+                val errorResource = it
+                _liveData.addSource(cacheSource){
+                    dispatchResource(Resource.from(errorResource, it))
                 }
             }
         }
     }
 
-    private fun loadFromNetwork() = apiManager.enqueueCall(createCall(), false)
-
-    protected abstract val apiManager : BaseApiManager
-
-    protected abstract fun createCall() : Call<T>
+    protected abstract fun loadFromNetwork() : LiveData<Resource<T>>
 
     @SuppressLint("StaticFieldLeak")
     private fun saveResultAndReInit(data: T){

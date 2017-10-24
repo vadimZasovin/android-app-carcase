@@ -12,9 +12,7 @@ import retrofit2.Response
  * Created by Admin on 17.10.2017.
  */
 
-fun <T> BaseApiManager.enqueueCall(call: Call<T>) = enqueueCall(call, true)
-
-internal fun <T> BaseApiManager.enqueueCall(call: Call<T>, sendLoadingEvent: Boolean = true) : LiveData<Resource<T>>{
+fun <T> BaseApiManager.enqueueCall(call: Call<T>, sendLoadingEvent: Boolean = true) : LiveData<Resource<T>>{
     val result = MutableLiveData<Resource<T>>()
 
     call.enqueue(object : Callback<T>{
