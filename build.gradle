@@ -27,6 +27,10 @@ allprojects {
     }
 }
 
+subprojects {
+    ext.libVersion = '3.0-alpha5'
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
