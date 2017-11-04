@@ -18,28 +18,28 @@ fun <T> BaseApiManager.enqueueCall(call: Call<T>, sendLoadingEvent: Boolean = tr
     call.enqueue(object : Callback<T>{
 
         override fun onFailure(call: Call<T>, t: Throwable) {
-            result.value = networkError(t)
+            result.value = error(t)
         }
 
         override fun onResponse(call: Call<T>, response: Response<T>) {
             if(response.isSuccessful){
-                result.value = networkSuccess(response.body())
+                result.value = success(response.body())
             }else{
                 val errorCode = response.code()
                 val error = RequestException(errorCode)
-                result.value = networkError(error)
+                result.value = error(error)
             }
         }
     })
 
     if(sendLoadingEvent){
-        result.value = networkLoading()
+        result.value = loading()
     }
     return result
 }
 
-private fun <T> networkSuccess(data: T) = Resource.success(Source.NETWORK, data)
+private fun <T> success(data: T) = Resource.success(Source.NETWORK, data)
 
-private fun networkError(error: Throwable) = Resource.error(Source.NETWORK, error, null)
+private fun error(error: Throwable) = Resource.error(Source.NETWORK, error, null)
 
-private fun networkLoading() = Resource.loading(Source.NETWORK, null)
+private fun loading() = Resource.loading(Source.NETWORK, null)
