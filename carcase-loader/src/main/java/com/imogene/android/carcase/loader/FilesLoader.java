@@ -95,7 +95,7 @@ public class FilesLoader extends BaseLoader<FilesLoader.Result> {
     private Item handleContentUri(Uri uri){
         Context context = getContext();
         ContentResolver resolver = context.getContentResolver();
-        Cursor cursor = resolver.query(uri, null, null, null, null, null);
+        Cursor cursor = resolver.query(uri, null, null, null, null);
 
         try {
             if(cursor != null && cursor.moveToFirst()){
