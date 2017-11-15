@@ -25,13 +25,13 @@ ext {
 }
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion "26.0.2"
 
 
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -46,8 +46,8 @@ android {
 }
 
 dependencies {
-    api project(':carcase-controller')
-    api project(':carcase-view-guide')
+    compile project(':carcase-controller')
+    compile project(':carcase-view-guide')
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
