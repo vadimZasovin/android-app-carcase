@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.X509TrustManager;
+
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -45,6 +48,12 @@ public class ApiCore {
         clientBuilder.readTimeout(builder.readTimeout, builder.readTimeoutTimeUnit);
         clientBuilder.writeTimeout(builder.writeTimeout, builder.writeTimeoutTimeUnit);
 
+        SSLSocketFactory sslSocketFactory = builder.sslSocketFactory;
+        X509TrustManager trustManager = builder.trustManager;
+        if(sslSocketFactory != null && trustManager != null){
+            clientBuilder.sslSocketFactory(sslSocketFactory, trustManager);
+        }
+
         client = clientBuilder.build();
 
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder();
@@ -81,6 +90,8 @@ public class ApiCore {
         private List<Interceptor> interceptors;
         private List<Interceptor> networkInterceptors;
         private List<Converter.Factory> converterFactories;
+        private SSLSocketFactory sslSocketFactory;
+        private X509TrustManager trustManager;
 
         public Builder(){
             readTimeout = 15;
@@ -169,6 +180,12 @@ public class ApiCore {
         public Builder addScalarsConverterFactory(){
             ScalarsConverterFactory factory = ScalarsConverterFactory.create();
             return addConverterFactory(factory);
+        }
+
+        public Builder sslSocketFactory(SSLSocketFactory factory, X509TrustManager trustManager){
+            this.sslSocketFactory = factory;
+            this.trustManager = trustManager;
+            return this;
         }
 
         public ApiCore build(){
