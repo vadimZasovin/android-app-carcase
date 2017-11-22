@@ -25,10 +25,17 @@ data class Resource<out T> internal constructor(val status: Status, val source: 
         internal fun <T> error(source: Source, error: Throwable, data: T? = null)
                 = Resource(Status.ERROR, source, data, error)
 
-        internal fun <T> from(from: Resource<T>, data: T?)
-                = Resource(from.status, from.source, data, from.error)
-
-        fun <X, Y> map(source: Resource<X>, data: Y?) =
+        fun <X, Y> from(source: Resource<X>, data: Y?) =
                 Resource(source.status, source.source, data, source.error)
     }
+}
+
+inline fun <X, Y> Resource<X>.map(map: (X) -> Y) : Resource<Y> {
+    val data = this.data
+    val newData = if(data == null){
+        null
+    }else{
+        map(data)
+    }
+    return Resource.from(this, newData)
 }

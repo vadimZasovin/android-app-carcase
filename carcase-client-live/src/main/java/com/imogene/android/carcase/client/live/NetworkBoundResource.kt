@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.os.AsyncTask
-import com.imogene.android.carcase.client.BaseApiManager
-import retrofit2.Call
 
 /**
  * Created by Admin on 18.10.2017.
