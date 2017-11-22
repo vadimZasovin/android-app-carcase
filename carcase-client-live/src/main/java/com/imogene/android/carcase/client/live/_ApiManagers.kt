@@ -12,7 +12,7 @@ import retrofit2.Response
  * Created by Admin on 17.10.2017.
  */
 
-fun <T> BaseApiManager.enqueueCall(call: Call<T>, sendLoadingEvent: Boolean = true) : LiveData<Resource<T>>{
+fun <T> BaseApiManager.enqueueCall(call: Call<T>) : LiveData<Resource<T>>{
     val result = MutableLiveData<Resource<T>>()
 
     call.enqueue(object : Callback<T>{
@@ -31,10 +31,7 @@ fun <T> BaseApiManager.enqueueCall(call: Call<T>, sendLoadingEvent: Boolean = tr
             }
         }
     })
-
-    if(sendLoadingEvent){
-        result.value = loading()
-    }
+    result.value = loading()
     return result
 }
 
