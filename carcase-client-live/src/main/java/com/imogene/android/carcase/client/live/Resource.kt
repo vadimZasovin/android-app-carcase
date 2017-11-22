@@ -30,7 +30,7 @@ data class Resource<out T> internal constructor(val status: Status, val source: 
     }
 }
 
-inline fun <X, Y> Resource<X>.map(map: (X) -> Y) : Resource<Y> {
+inline fun <X, Y> Resource<X>.map(map: (X) -> Y?) : Resource<Y> {
     val data = this.data
     val newData = if(data == null){
         null
