@@ -12,10 +12,14 @@ import retrofit2.Response
  * Created by Admin on 17.10.2017.
  */
 
-fun <T> BaseApiManager.enqueueCall(call: Call<T>) : LiveData<Resource<T>>{
-    val result = MutableLiveData<Resource<T>>()
+fun <T> Call<T>.asLiveData() : LiveData<Resource<T>> {
+    if(isCanceled || isExecuted){
+        throw IllegalStateException("Cancelled or executed Call can " +
+                "not be represented as a LiveData.")
+    }
 
-    call.enqueue(object : Callback<T>{
+    val result = MutableLiveData<Resource<T>>()
+    enqueue(object : Callback<T>{
 
         override fun onFailure(call: Call<T>, t: Throwable) {
             result.value = error(t)
