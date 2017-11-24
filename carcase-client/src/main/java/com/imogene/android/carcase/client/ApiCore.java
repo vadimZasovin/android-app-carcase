@@ -14,6 +14,7 @@ import javax.net.ssl.X509TrustManager;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -69,6 +70,13 @@ public class ApiCore {
             }
         }
 
+        List<CallAdapter.Factory> callAdapterFactories = builder.callAdapterFactories;
+        if(callAdapterFactories != null && !callAdapterFactories.isEmpty()){
+            for (CallAdapter.Factory factory : callAdapterFactories){
+                retrofitBuilder.addCallAdapterFactory(factory);
+            }
+        }
+
         retrofit = retrofitBuilder.build();
     }
 
@@ -92,6 +100,7 @@ public class ApiCore {
         private List<Converter.Factory> converterFactories;
         private SSLSocketFactory sslSocketFactory;
         private X509TrustManager trustManager;
+        private List<CallAdapter.Factory> callAdapterFactories;
 
         public Builder(){
             readTimeout = 15;
@@ -186,6 +195,18 @@ public class ApiCore {
             this.sslSocketFactory = factory;
             this.trustManager = trustManager;
             return this;
+        }
+
+        public Builder addCallAdapterFactory(CallAdapter.Factory factory){
+            ensureCallAdapterFactories();
+            callAdapterFactories.add(factory);
+            return this;
+        }
+
+        private void ensureCallAdapterFactories(){
+            if(callAdapterFactories == null){
+                callAdapterFactories = new ArrayList<>();
+            }
         }
 
         public ApiCore build(){
