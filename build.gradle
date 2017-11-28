@@ -28,7 +28,7 @@ allprojects {
 }
 
 subprojects {
-    ext.libVersion = '3.0-alpha15'
+    ext.libVersion = '3.0-alpha16'
 }
 
 task clean(type: Delete) {
