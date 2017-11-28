@@ -3,6 +3,7 @@ package com.imogene.android.carcase.client.live
 import android.annotation.SuppressLint
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
+import android.arch.lifecycle.Observer
 import android.os.AsyncTask
 
 /**
@@ -75,13 +76,21 @@ abstract class NetworkBoundResource<T> {
 
             override fun onPostExecute(result: Unit?) {
                 val cacheSource = loadFromCache()
-                _liveData.addSource(cacheSource){
-                    _liveData.removeSource(cacheSource)
-                    dispatchResource(Source.NETWORK, it)
-                    _liveData.addSource(cacheSource){
-                        dispatchResource(Source.CACHE, it)
+                _liveData.addSource(cacheSource, object : Observer<T> {
+
+                    private var firstChange = true
+
+                    override fun onChanged(value: T?) {
+                        val source = if(firstChange){
+                            firstChange = false
+                            Source.NETWORK
+                        }else{
+                            Source.CACHE
+                        }
+                        dispatchResource(source, value)
                     }
-                }
+
+                })
             }
         }.execute()
     }
