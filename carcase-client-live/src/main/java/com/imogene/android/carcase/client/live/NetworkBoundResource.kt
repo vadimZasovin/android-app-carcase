@@ -89,7 +89,6 @@ abstract class NetworkBoundResource<T> {
                         }
                         dispatchResource(source, value)
                     }
-
                 })
             }
         }.execute()
