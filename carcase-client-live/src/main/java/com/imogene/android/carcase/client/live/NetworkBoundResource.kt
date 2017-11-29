@@ -11,6 +11,10 @@ import android.os.AsyncTask
  */
 abstract class NetworkBoundResource<T> {
 
+    var observeCacheDuringRefresh = true
+
+    var observeCacheAfterRefresh = true
+
     private val _liveData = MediatorLiveData<Resource<T>>()
 
     val liveData : LiveData<Resource<T>> by lazy(LazyThreadSafetyMode.NONE) {
@@ -40,13 +44,18 @@ abstract class NetworkBoundResource<T> {
     private fun refresh(cacheSource: LiveData<T>){
         val networkSource = loadFromNetwork()
         _liveData.addSource(cacheSource){
+            if(!observeCacheDuringRefresh){
+                _liveData.removeSource(cacheSource)
+            }
             dispatchResource(Resource.loading(Source.NETWORK, it))
         }
         _liveData.addSource(networkSource){
             if(it == null || it.status == Status.LOADING){
                 return@addSource
             }
-            _liveData.removeSource(cacheSource)
+            if(observeCacheDuringRefresh){
+                _liveData.removeSource(cacheSource)
+            }
             _liveData.removeSource(networkSource)
             if(it.status == Status.SUCCESS){
                 val data = it.data
@@ -78,16 +87,18 @@ abstract class NetworkBoundResource<T> {
                 val cacheSource = loadFromCache()
                 _liveData.addSource(cacheSource, object : Observer<T> {
 
-                    private var firstChange = true
+                    private var firstTrigger = true
 
                     override fun onChanged(value: T?) {
-                        val source = if(firstChange){
-                            firstChange = false
-                            Source.NETWORK
-                        }else{
-                            Source.CACHE
+                        if(firstTrigger){
+                            dispatchResource(Source.NETWORK, value)
+                            if(!observeCacheAfterRefresh){
+                                _liveData.removeSource(cacheSource)
+                            }
+                            firstTrigger = false
+                        }else if(observeCacheAfterRefresh){
+                            dispatchResource(Source.CACHE, value)
                         }
-                        dispatchResource(source, value)
                     }
                 })
             }
