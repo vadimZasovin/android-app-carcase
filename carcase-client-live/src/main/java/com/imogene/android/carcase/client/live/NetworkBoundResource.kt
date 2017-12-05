@@ -180,8 +180,8 @@ abstract class NetworkBoundResource<T> {
             // if this resource is not initialized,
             // we just init liveData property
             liveData
-        }else{
-
+        }else if(!isRefreshing){
+            refresh()
         }
     }
 }
