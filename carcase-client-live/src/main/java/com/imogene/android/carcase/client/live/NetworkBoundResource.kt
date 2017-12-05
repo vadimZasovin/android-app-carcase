@@ -11,10 +11,6 @@ import android.os.AsyncTask
  */
 abstract class NetworkBoundResource<T> {
 
-    var observeCacheDuringRefresh = true
-
-    var observeCacheAfterRefresh = true
-
     private val _liveData = MediatorLiveData<Resource<T>>()
 
     val liveData : LiveData<Resource<T>> by lazy(LazyThreadSafetyMode.NONE) {
@@ -22,13 +18,15 @@ abstract class NetworkBoundResource<T> {
         _liveData
     }
 
+    private lateinit var cacheSource : LiveData<T>
+
     private fun initiate(){
         dispatchResource(Resource.loading(Source.CACHE))
-        val cacheSource = loadFromCache()
+        cacheSource = loadFromCache()
         _liveData.addSource(cacheSource){
             _liveData.removeSource(cacheSource)
             if(shouldRefresh(it)){
-                refresh(cacheSource)
+                refresh()
             }else{
                 _liveData.addSource(cacheSource){
                     dispatchResource(Source.CACHE, it)
@@ -41,10 +39,10 @@ abstract class NetworkBoundResource<T> {
 
     protected abstract fun shouldRefresh(data: T?) : Boolean
 
-    private fun refresh(cacheSource: LiveData<T>){
+    private fun refresh(){
         val networkSource = loadFromNetwork()
         _liveData.addSource(cacheSource){
-            if(!observeCacheDuringRefresh){
+            if(!isObservingCacheDuringRefreshEnabled){
                 _liveData.removeSource(cacheSource)
             }
             dispatchResource(Resource.loading(Source.NETWORK, it))
@@ -53,7 +51,7 @@ abstract class NetworkBoundResource<T> {
             if(it == null || it.status == Status.LOADING){
                 return@addSource
             }
-            if(observeCacheDuringRefresh){
+            if(isObservingCacheDuringRefreshEnabled){
                 _liveData.removeSource(cacheSource)
             }
             _liveData.removeSource(networkSource)
@@ -84,7 +82,7 @@ abstract class NetworkBoundResource<T> {
             }
 
             override fun onPostExecute(result: Unit?) {
-                val cacheSource = loadFromCache()
+                cacheSource = loadFromCache()
                 _liveData.addSource(cacheSource, object : Observer<T> {
 
                     private var firstTrigger = true
@@ -92,11 +90,11 @@ abstract class NetworkBoundResource<T> {
                     override fun onChanged(value: T?) {
                         if(firstTrigger){
                             dispatchResource(Source.NETWORK, value)
-                            if(!observeCacheAfterRefresh){
+                            if(!isObservingCacheAfterRefreshEnabled){
                                 _liveData.removeSource(cacheSource)
                             }
                             firstTrigger = false
-                        }else if(observeCacheAfterRefresh){
+                        }else if(isObservingCacheAfterRefreshEnabled){
                             dispatchResource(Source.CACHE, value)
                         }
                     }
@@ -118,4 +116,72 @@ abstract class NetworkBoundResource<T> {
     protected abstract fun saveData(data: T)
 
     protected open fun onRefreshFailed(){}
+
+    /**
+     * Indicates whether the [liveData] has any value set.
+     */
+    val isInitialized get() = _liveData.value != null
+
+    /**
+     * Status of the resource. It is an error to access
+     * this property when this resource has not been
+     * initialized yet, i.e. when the [liveData]
+     * has not been accessed yet.
+     */
+    val currentStatus : Status
+        get() {
+            val resource = _liveData.value
+            return resource?.status ?:
+                    throw IllegalStateException(
+                            "Resource is not initialized yet.")
+        }
+
+    /**
+     * Source of the resource. It is an error to access
+     * this property when this resource has not been
+     * initialized yet, i.e. when the [liveData]
+     * has not been accessed yet.
+     */
+    val currentSource : Source
+        get() {
+            val resource = _liveData.value
+            return resource?.source ?:
+                    throw IllegalStateException(
+                            "Resource is not initialized yet.")
+        }
+
+    /**
+     * Indicates whether this resource is in progress
+     * of refreshing data from network.
+     */
+    val isRefreshing
+        get() = isInitialized
+                && currentStatus == Status.LOADING
+                && currentSource == Source.NETWORK
+
+    var isObservingCacheDuringRefreshEnabled = true
+        set(value) {
+            if(value != field && isRefreshing){
+                if(value){
+                    _liveData.addSource(cacheSource){
+                        dispatchResource(Resource.loading(Source.NETWORK, it))
+                    }
+                }else{
+                    _liveData.removeSource(cacheSource)
+                }
+            }
+            field = value
+        }
+
+    var isObservingCacheAfterRefreshEnabled = true
+
+    fun invalidate(){
+        if(!isInitialized){
+            // if this resource is not initialized,
+            // we just init liveData property
+            liveData
+        }else{
+
+        }
+    }
 }
