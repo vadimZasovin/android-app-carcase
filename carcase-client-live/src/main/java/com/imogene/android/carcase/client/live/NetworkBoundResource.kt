@@ -181,6 +181,7 @@ abstract class NetworkBoundResource<T> {
             // we just init liveData property
             liveData
         }else if(!isRefreshing){
+            _liveData.removeSource(cacheSource)
             refresh()
         }
     }
