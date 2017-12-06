@@ -223,6 +223,14 @@ abstract class NetworkBoundResource<T> {
             }
         }
 
+    /**
+     * Starts loading the data from the network if
+     * the [liveData] already has some value and the
+     * data is not loading now. If the [liveData]
+     * has no value the whole process of loading
+     * is initiated: loading from cache and then
+     * from network.
+     */
     fun invalidate(){
         if(!isInitialized){
             // if this resource is not initialized,
