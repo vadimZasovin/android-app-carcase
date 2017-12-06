@@ -117,52 +117,69 @@ abstract class NetworkBoundResource<T> {
 
     protected open fun onRefreshFailed(){}
 
-    /**
-     * Indicates whether the [liveData] has any value set.
+    /*
+     Indicates whether the _liveData already has any value.
      */
-    val isInitialized get() = _liveData.value != null
+    private val isInitialized get() = _liveData.value != null
 
     /**
      * Status of the resource. It is an error to access
-     * this property when this resource has not been
-     * initialized yet, i.e. when the [liveData]
-     * has not been accessed yet.
+     * this property when the [liveData] has not been
+     * accessed yet.
      */
     val currentStatus : Status
         get() {
             val resource = _liveData.value
             return resource?.status ?:
                     throw IllegalStateException(
-                            "Resource is not initialized yet.")
+                            "liveData has no value to " +
+                            "take status from.")
         }
 
     /**
      * Source of the resource. It is an error to access
-     * this property when this resource has not been
-     * initialized yet, i.e. when the [liveData]
-     * has not been accessed yet.
+     * this property when the [liveData] has not been
+     * accessed yet.
      */
     val currentSource : Source
         get() {
             val resource = _liveData.value
             return resource?.source ?:
                     throw IllegalStateException(
-                            "Resource is not initialized yet.")
+                            "liveData has no value " +
+                            "to take source from.")
         }
 
     /**
-     * Indicates whether this resource is in progress
-     * of refreshing data from network.
+     * Indicates whether this resource is in process
+     * of loading data from the network.
      */
     val isRefreshing
         get() = isInitialized
                 && currentStatus == Status.LOADING
                 && currentSource == Source.NETWORK
 
+    /**
+     * Controls whether the [liveData] can be updated
+     * with values from the cache during loading data
+     * from the network.
+     *
+     * It is enabled by default.
+     *
+     * If the value of this property changed during
+     * refresh, the [liveData] is changed too by
+     * adding or removing the proper cache source
+     * LiveData.
+     */
     var isObservingCacheDuringRefreshEnabled = true
         set(value) {
+            // update _liveData sources only if
+            // a new value assigned and data is
+            // loading from the network now
             if(value != field && isRefreshing){
                 if(value){
+                    // remove a possible old cache source
+                    _liveData.removeSource(cacheSource)
                     _liveData.addSource(cacheSource){
                         dispatchResource(Resource.loading(Source.NETWORK, it))
                     }
@@ -173,7 +190,38 @@ abstract class NetworkBoundResource<T> {
             field = value
         }
 
+    /**
+     * Controls whether the [liveData] can be updated
+     * with values from the cache after loading data
+     * from the network is finished.
+     *
+     * It is enabled by default.
+     *
+     * If the value of this property changed after
+     * the data successfully loaded from the network,
+     * the [liveData] is changed too by adding or
+     * removing the proper cache source LiveData.
+     */
     var isObservingCacheAfterRefreshEnabled = true
+        set(value) {
+            if(value != field){
+                // update _liveData sources only if
+                // a new value assigned to the property
+                // and the data is successfully loaded
+                // from the network.
+                if(currentStatus == Status.SUCCESS && currentSource == Source.NETWORK){
+                    if(value){
+                        // remove a possible old cache source
+                        _liveData.removeSource(cacheSource)
+                        _liveData.addSource(cacheSource){
+                            dispatchResource(Source.CACHE, it)
+                        }
+                    }else{
+                        _liveData.removeSource(cacheSource)
+                    }
+                }
+            }
+        }
 
     fun invalidate(){
         if(!isInitialized){
