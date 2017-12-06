@@ -27,7 +27,7 @@ abstract class NetworkBoundResource<T> {
             _liveData.removeSource(cacheSource)
             if(shouldRefresh(it)){
                 refresh()
-            }else{
+            } else if (isObservingCacheEnabled){
                 _liveData.addSource(cacheSource){
                     dispatchResource(Source.CACHE, it)
                 }
@@ -62,10 +62,12 @@ abstract class NetworkBoundResource<T> {
                 }
             }else{
                 onRefreshFailed()
-                @Suppress("UnnecessaryVariable")
-                val errorResource = it
-                _liveData.addSource(cacheSource){
-                    dispatchResource(Resource.from(errorResource, it))
+                if(isObservingCacheEnabled){
+                    @Suppress("UnnecessaryVariable")
+                    val errorResource = it
+                    _liveData.addSource(cacheSource){
+                        dispatchResource(Resource.from(errorResource, it))
+                    }
                 }
             }
         }
@@ -173,21 +175,23 @@ abstract class NetworkBoundResource<T> {
      */
     var isObservingCacheDuringRefreshEnabled = true
         set(value) {
-            // update _liveData sources only if
-            // a new value assigned and data is
-            // loading from the network now
-            if(value != field && isRefreshing){
-                if(value){
-                    // remove a possible old cache source
+            if(value != field){
+                // update backing field
+                field = value
+                if(isRefreshing){
+                    // update _liveData sources only if
+                    // a new value assigned and data is
+                    // loading from the network now
+
+                    // remove old cache source
                     _liveData.removeSource(cacheSource)
-                    _liveData.addSource(cacheSource){
-                        dispatchResource(Resource.loading(Source.NETWORK, it))
+                    if(value){
+                        _liveData.addSource(cacheSource){
+                            dispatchResource(Resource.loading(Source.NETWORK, it))
+                        }
                     }
-                }else{
-                    _liveData.removeSource(cacheSource)
                 }
             }
-            field = value
         }
 
     /**
@@ -205,19 +209,63 @@ abstract class NetworkBoundResource<T> {
     var isObservingCacheAfterRefreshEnabled = true
         set(value) {
             if(value != field){
+                // update backing field
+                field = value
+                if(!isInitialized){
+                    return
+                }
                 // update _liveData sources only if
                 // a new value assigned to the property
                 // and the data is successfully loaded
                 // from the network.
                 if(currentStatus == Status.SUCCESS && currentSource == Source.NETWORK){
+                    // remove old cache source
+                    _liveData.removeSource(cacheSource)
                     if(value){
-                        // remove a possible old cache source
-                        _liveData.removeSource(cacheSource)
                         _liveData.addSource(cacheSource){
                             dispatchResource(Source.CACHE, it)
                         }
-                    }else{
+                    }
+                }
+            }
+        }
+
+    /**
+     * Controls whether the [liveData] can be updated
+     * with values from cache. Note however, that the
+     * data will be still loaded from cache initially.
+     *
+     * It is enabled by default.
+     *
+     * Changing the value of this property also affects
+     * [isObservingCacheDuringRefreshEnabled] and
+     * [isObservingCacheAfterRefreshEnabled] properties.
+     */
+    var isObservingCacheEnabled = true
+        set(value) {
+            if(value != field){
+                // update backing field
+                field = value
+                if(!isInitialized){
+                    return
+                }
+                // assign new value to this properties as well
+                isObservingCacheDuringRefreshEnabled = value
+                isObservingCacheAfterRefreshEnabled = value
+
+                // update _liveData's cache source LiveData
+                // only if current status and source are not
+                // appropriate to logic of properties updated
+                // above
+                if(!isRefreshing){
+                    if(!(currentStatus == Status.SUCCESS && currentSource == Source.NETWORK)){
+                        // remove old cache source
                         _liveData.removeSource(cacheSource)
+                        if(value){
+                            _liveData.addSource(cacheSource){
+                                dispatchResource(Source.CACHE, it)
+                            }
+                        }
                     }
                 }
             }
