@@ -177,4 +177,8 @@ public abstract class BaseFragment extends Fragment implements OnBackPressListen
     public final int requestPermission(String permission, boolean withExplanation, int requestCode){
         return AppUtils.Permissions.requestPermission(this, requestCode, withExplanation, permission);
     }
+
+    public final boolean checkPermission(String permission){
+        return activity.checkPermission(permission);
+    }
 }

@@ -148,4 +148,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public final int requestPermission(String permission, boolean withExplanation, int requestCode){
         return AppUtils.Permissions.requestPermission(this, requestCode, withExplanation, permission);
     }
+
+    public final boolean checkPermission(String permission){
+        return AppUtils.Permissions.checkPermission(this, permission);
+    }
 }
