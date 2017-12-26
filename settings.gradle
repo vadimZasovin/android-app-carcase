@@ -1,1 +1,1 @@
-include ':sample', ':carcase-client', ':carcase-commons', ':carcase-controller', ':carcase-view-guide', ':carcase-controller-guide', ':carcase-number_drawable', ':carcase-async', ':carcase-loader', ':carcase-client-live'
+include ':sample', ':carcase-client', ':carcase-commons', ':carcase-controller', ':carcase-view-guide', ':carcase-controller-guide', ':carcase-number_drawable', ':carcase-async', ':carcase-loader', ':carcase-client-live', ':carcase-view-progress'
