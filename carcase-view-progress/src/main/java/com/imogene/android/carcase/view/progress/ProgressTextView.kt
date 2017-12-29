@@ -10,7 +10,6 @@ import android.support.v7.widget.AppCompatTextView
 import android.text.SpannableString
 import android.text.Spanned
 import android.util.AttributeSet
-import com.imogene.waitingdots.JumpingSpan
 import com.imogene.waitingdots.SinEvaluator
 
 /**

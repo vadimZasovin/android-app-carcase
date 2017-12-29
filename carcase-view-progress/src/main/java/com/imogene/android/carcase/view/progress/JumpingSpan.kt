@@ -1,4 +1,4 @@
-package com.imogene.waitingdots
+package com.imogene.android.carcase.view.progress
 
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -13,7 +13,7 @@ internal class JumpingSpan : ReplacementSpan() {
 
     private var initialAlpha = -1
 
-    var alpha = 0F
+    var alpha = 1F
 
     override fun getSize(paint: Paint, text: CharSequence,
                          start: Int, end: Int,
