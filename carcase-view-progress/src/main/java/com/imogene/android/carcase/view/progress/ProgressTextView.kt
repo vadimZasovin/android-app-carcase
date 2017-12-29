@@ -141,6 +141,10 @@ class ProgressTextView @JvmOverloads constructor(
             autoStart = array.getBoolean(
                     R.styleable.ProgressTextView_ptv_autoStart,
                     true)
+
+            isExpanded = array.getBoolean(
+                    R.styleable.ProgressTextView_ptv_expanded,
+                    true)
         } finally {
             array.recycle()
         }
@@ -153,6 +157,11 @@ class ProgressTextView @JvmOverloads constructor(
         val second = createAnimator(spanTwo, duration / 6)
         val third = createAnimator(spanThree, duration / 3)
         animators.playTogether(first, second, third)
+
+        if(!isExpanded){
+            updateSpansAlpha(0F)
+            moveSpans(1F, false)
+        }
     }
 
     private fun createAnimator(jumpingSpan: JumpingSpan, delay: Long) : ObjectAnimator {
@@ -229,11 +238,10 @@ class ProgressTextView @JvmOverloads constructor(
     }
 
     private fun moveSpans(fraction: Float, expand: Boolean){
-        val second : Float
-        if(expand){
-            second = -dotWidth + dotWidth * fraction
+        val second : Float = if(expand){
+            -dotWidth + dotWidth * fraction
         } else {
-            second = -dotWidth * fraction
+            -dotWidth * fraction
         }
         val multiplier = 2
         val third = second * multiplier

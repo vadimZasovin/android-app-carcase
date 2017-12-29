@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ProgressTextView">
-        <attr name="ptv_duration" format="integer" />
-        <attr name="ptv_jumpHeight" format="dimension" />
-        <attr name="ptv_autoStart" format="boolean" />
+        <attr name="ptv_duration" format="integer"/>
+        <attr name="ptv_jumpHeight" format="dimension"/>
+        <attr name="ptv_autoStart" format="boolean"/>
+        <attr name="ptv_expanded" format="boolean"/>
     </declare-styleable>
 </resources>
