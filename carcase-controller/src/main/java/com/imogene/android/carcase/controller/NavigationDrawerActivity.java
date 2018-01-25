@@ -12,7 +12,8 @@ import android.support.v4.widget.DrawerLayout;
  * Created by Admin on 12.04.2017.
  */
 
-public abstract class NavigationDrawerActivity extends NavigableActivity {
+public abstract class NavigationDrawerActivity extends NavigableActivity
+        implements OnBackPressListener {
 
     private DrawerLayout drawerLayout;
 
@@ -86,11 +87,12 @@ public abstract class NavigationDrawerActivity extends NavigableActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public boolean onInterceptBackPressed() {
         if(isNavigationDrawerOpened()){
             closeNavigationDrawer();
-        }else {
-            super.onBackPressed();
+            return true;
+        } else {
+            return false;
         }
     }
 }
