@@ -21,15 +21,25 @@ public abstract class NavigationDrawerActivity extends NavigableActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(isNavigable()){
-            drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+            drawerLayout = findViewById(R.id.drawerLayout);
             setupNavigationDrawerFragment();
         }
     }
 
     @Override
     protected int getLayoutRes() {
-        return isNavigable() ? R.layout.activity_navigation_drawer : super.getLayoutRes();
+        if(isNavigable()){
+            if(isTabletLand() && isNavigationDrawerPermanentOnTabletLand()){
+                return R.layout.activity_navigation_drawer_permanent;
+            } else {
+                return R.layout.activity_navigation_drawer;
+            }
+        } else {
+            return super.getLayoutRes();
+        }
     }
+
+    protected boolean isNavigationDrawerPermanentOnTabletLand(){ return true; }
 
     @Override
     protected boolean isNavigable(){

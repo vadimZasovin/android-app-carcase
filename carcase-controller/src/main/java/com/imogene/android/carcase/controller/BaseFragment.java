@@ -181,4 +181,16 @@ public abstract class BaseFragment extends Fragment implements OnBackPressListen
     public final boolean checkPermission(String permission){
         return activity.checkPermission(permission);
     }
+
+    public final boolean isLand(){
+        return activity.isLand();
+    }
+
+    public final boolean isTablet(){
+        return activity.isTablet();
+    }
+
+    public final boolean isTabletLand(){
+        return isLand() && isTablet();
+    }
 }

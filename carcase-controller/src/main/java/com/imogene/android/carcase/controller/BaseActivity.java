@@ -1,6 +1,7 @@
 package com.imogene.android.carcase.controller;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
 import android.support.annotation.IdRes;
@@ -151,5 +152,19 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public final boolean checkPermission(String permission){
         return AppUtils.Permissions.checkPermission(this, permission);
+    }
+
+    public final boolean isLand(){
+        Resources resources = getResources();
+        return resources.getBoolean(R.bool.land);
+    }
+
+    public final boolean isTablet(){
+        Resources resources = getResources();
+        return resources.getBoolean(R.bool.tablet);
+    }
+
+    public final boolean isTabletLand(){
+        return isLand() && isTablet();
     }
 }
