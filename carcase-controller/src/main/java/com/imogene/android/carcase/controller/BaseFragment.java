@@ -63,7 +63,7 @@ public abstract class BaseFragment extends Fragment implements OnBackPressListen
     }
 
     public final boolean checkApiLevel(int requiredApiLevel) {
-        return activity.checkApiLevel(requiredApiLevel);
+        return AppUtils.Commons.checkApiLevel(requiredApiLevel);
     }
 
     public final int convertDpsInPixels(int dps) {
