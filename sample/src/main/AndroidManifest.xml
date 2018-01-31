@@ -14,7 +14,7 @@
             android:name=".SampleGuideActivity"/>
 
         <activity
-            android:name=".SampleProgressTextViewActivity">
+            android:name=".SampleBottomNavigationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

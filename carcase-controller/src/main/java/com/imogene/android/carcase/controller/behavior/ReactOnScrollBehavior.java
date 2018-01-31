@@ -38,21 +38,21 @@ public abstract class ReactOnScrollBehavior extends CoordinatorLayout.Behavior<V
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed,
                 dyConsumed, dxUnconsumed, dyUnconsumed, type);
         if(dyConsumed > 0){
-            hide(child, target);
+            hide(child, coordinatorLayout);
         }else if(dyConsumed < 0){
             show(child);
         }
     }
 
-    public final void hide(View child, View target){
+    public final void hide(View child, CoordinatorLayout parent){
         this.child = child;
         show = false;
         ViewPropertyAnimator animator = child.animate();
-        hide(child, target, animator);
+        hide(child, parent, animator);
         animator.withEndAction(this);
     }
 
-    protected abstract void hide(View child, View target, ViewPropertyAnimator animator);
+    protected abstract void hide(View child, CoordinatorLayout parent, ViewPropertyAnimator animator);
 
     public final void show(View child){
         this.child = child;

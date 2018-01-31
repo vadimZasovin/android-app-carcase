@@ -1,7 +1,9 @@
 package com.imogene.android.carcase.controller.behavior;
 
 import android.content.Context;
+import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 
@@ -16,11 +18,11 @@ public class SlideOnScrollBehavior extends ReactOnScrollBehavior{
     }
 
     @Override
-    protected void hide(View child, View target, ViewPropertyAnimator animator) {
+    protected void hide(View child, CoordinatorLayout parent, ViewPropertyAnimator animator) {
         float translationY = child.getTranslationY();
         int childBottom = child.getBottom();
         int childHeight = child.getHeight();
-        int targetBottom = target.getBottom();
+        int targetBottom = parent.getBottom();
         int distance = childHeight + targetBottom - childBottom;
         animator.translationYBy(distance - translationY);
     }
