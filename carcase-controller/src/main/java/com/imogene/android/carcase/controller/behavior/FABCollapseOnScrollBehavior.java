@@ -1,6 +1,7 @@
 package com.imogene.android.carcase.controller.behavior;
 
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
@@ -16,12 +17,12 @@ public class FABCollapseOnScrollBehavior extends FABReactOnScrollBehavior{
     }
 
     @Override
-    protected void hide(View view, ViewPropertyAnimator animator) {
+    protected void hide(FloatingActionButton child, ViewPropertyAnimator animator) {
         animator.scaleX(0).scaleY(0).alpha(.5f).alpha(.5f);
     }
 
     @Override
-    protected void show(View view, ViewPropertyAnimator animator) {
+    protected void show(FloatingActionButton child, ViewPropertyAnimator animator) {
         animator.scaleX(1).scaleY(1).alpha(1).alpha(1);
     }
 }

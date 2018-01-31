@@ -15,11 +15,19 @@ import android.view.ViewPropertyAnimator;
 public abstract class ReactOnScrollBehavior extends CoordinatorLayout.Behavior<View>
         implements Runnable {
 
+    private CoordinatorLayout parent;
     private View child;
     private boolean show;
 
     public ReactOnScrollBehavior(Context context, AttributeSet attributeSet){
         super();
+    }
+
+    @Override
+    public boolean onLayoutChild(CoordinatorLayout parent, View child, int layoutDirection) {
+        this.parent = parent;
+        this.child = child;
+        return super.onLayoutChild(parent, child, layoutDirection);
     }
 
     @Override
@@ -38,14 +46,19 @@ public abstract class ReactOnScrollBehavior extends CoordinatorLayout.Behavior<V
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed,
                 dyConsumed, dxUnconsumed, dyUnconsumed, type);
         if(dyConsumed > 0){
-            hide(child, coordinatorLayout);
+            hide();
         }else if(dyConsumed < 0){
-            show(child);
+            show();
         }
     }
 
-    public final void hide(View child, CoordinatorLayout parent){
-        this.child = child;
+    public final void hide(){
+        if(child != null && parent != null){
+            hideInternal();
+        }
+    }
+
+    private void hideInternal(){
         show = false;
         ViewPropertyAnimator animator = child.animate();
         hide(child, parent, animator);
@@ -54,8 +67,13 @@ public abstract class ReactOnScrollBehavior extends CoordinatorLayout.Behavior<V
 
     protected abstract void hide(View child, CoordinatorLayout parent, ViewPropertyAnimator animator);
 
-    public final void show(View child){
-        this.child = child;
+    public final void show(){
+        if(child != null){
+            showInternal();
+        }
+    }
+
+    private void showInternal(){
         show = true;
         ViewPropertyAnimator animator = child.animate();
         show(child, animator);

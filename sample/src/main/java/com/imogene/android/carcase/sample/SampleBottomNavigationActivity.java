@@ -42,7 +42,7 @@ public class SampleBottomNavigationActivity extends BottomNavigationActivity {
     private void showFABUsingBehavior(){
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
         FABReactOnScrollBehavior behavior = (FABReactOnScrollBehavior) lp.getBehavior();
-        behavior.show(fab);
+        behavior.show();
     }
 
     @Override

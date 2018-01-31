@@ -33,12 +33,12 @@ public class FABSlideOnScrollBehavior extends FABReactOnScrollBehavior{
     }
 
     @Override
-    protected void hide(View view, ViewPropertyAnimator animator) {
-        slideBehavior.hide(view, parent, animator);
+    protected void hide(FloatingActionButton child, ViewPropertyAnimator animator) {
+        slideBehavior.hide(child, parent, animator);
     }
 
     @Override
-    protected void show(View view, ViewPropertyAnimator animator) {
-        slideBehavior.show(view, animator);
+    protected void show(FloatingActionButton child, ViewPropertyAnimator animator) {
+        slideBehavior.show(child, animator);
     }
 }
