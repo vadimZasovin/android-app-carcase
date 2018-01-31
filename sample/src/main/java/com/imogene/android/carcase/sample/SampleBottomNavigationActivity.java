@@ -4,18 +4,46 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
+import android.view.View;
+import android.widget.TextView;
 
 import com.imogene.android.carcase.controller.BottomNavigationActivity;
+import com.imogene.android.carcase.controller.behavior.FABReactOnScrollBehavior;
 
 /**
  * Created by Admin on 14.04.2017.
  */
 
 public class SampleBottomNavigationActivity extends BottomNavigationActivity {
+
+    private FloatingActionButton fab;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        fab = findViewById(R.id.floating_action_button);
+        TextView textView = findViewById(R.id.text);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showFABUsingBehavior();
+            }
+        });
+    }
+
+    private void showFABUsingBehavior(){
+        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+        FABReactOnScrollBehavior behavior = (FABReactOnScrollBehavior) lp.getBehavior();
+        behavior.show(fab);
+    }
 
     @Override
     protected int getLayoutRes() {

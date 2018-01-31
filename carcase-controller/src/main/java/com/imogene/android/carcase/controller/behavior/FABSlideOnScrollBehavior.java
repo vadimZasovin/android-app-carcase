@@ -14,37 +14,31 @@ import android.view.ViewPropertyAnimator;
 
 public class FABSlideOnScrollBehavior extends FABReactOnScrollBehavior{
 
-    private final SlideOnScrollBehavior wrappedBehavior;
+    private CoordinatorLayout parent;
+    private final SlideOnScrollBehavior slideBehavior;
 
     public FABSlideOnScrollBehavior(Context context, AttributeSet attributeSet){
         super(context, attributeSet);
-        wrappedBehavior = new SlideOnScrollBehavior(context, attributeSet);
+        slideBehavior = new SlideOnScrollBehavior(context, attributeSet);
     }
 
     @Override
     public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout,
                                        @NonNull FloatingActionButton child,
-                                       @NonNull View directTargetChild, @NonNull View target,
-                                       int nestedScrollAxes, int type) {
-        return wrappedBehavior.onStartNestedScroll(
-                coordinatorLayout, child, directTargetChild, target, nestedScrollAxes, type);
+                                       @NonNull View directTargetChild,
+                                       @NonNull View target, int nestedScrollAxes, int type) {
+        parent = coordinatorLayout;
+        return super.onStartNestedScroll(coordinatorLayout, child,
+                directTargetChild, target, nestedScrollAxes, type);
     }
 
     @Override
-    public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout,
-                               @NonNull FloatingActionButton child,
-                               @NonNull View target, int dxConsumed, int dyConsumed,
-                               int dxUnconsumed, int dyUnconsumed, int type) {
-        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed,
-                dyConsumed, dxUnconsumed, dyUnconsumed, type);
-        wrappedBehavior.onNestedScroll(
-                coordinatorLayout, child, target, dxConsumed,
-                dyConsumed, dxUnconsumed, dyUnconsumed, type);
+    protected void hide(View view, ViewPropertyAnimator animator) {
+        slideBehavior.hide(view, parent, animator);
     }
 
     @Override
-    protected void hide(View view, ViewPropertyAnimator animator) {}
-
-    @Override
-    protected void show(View view, ViewPropertyAnimator animator) {}
+    protected void show(View view, ViewPropertyAnimator animator) {
+        slideBehavior.show(view, animator);
+    }
 }
