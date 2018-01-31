@@ -246,13 +246,12 @@ abstract class NetworkBoundResource<T> {
             if(value != field){
                 // update backing field
                 field = value
-                if(!isInitialized){
-                    return
-                }
                 // assign new value to this properties as well
                 isObservingCacheDuringRefreshEnabled = value
                 isObservingCacheAfterRefreshEnabled = value
-
+                if(!isInitialized){
+                    return
+                }
                 // update _liveData's cache source LiveData
                 // only if current status and source are not
                 // appropriate to logic of properties updated
