@@ -3,7 +3,7 @@
     <declare-styleable name="CircleGuideStepView">
         <attr name="cgsv_size" format="dimension"/>
         <attr name="cgsv_stepsCount" format="integer"/>
-        <attr name="cgsv_margins" format="dimension"/>
+        <attr name="cgsv_stepMargin" format="dimension"/>
         <attr name="cgsv_colorInactive" format="color"/>
         <attr name="cgsv_colorActive" format="color"/>
         <attr name="cgsv_styleActive" format="enum">

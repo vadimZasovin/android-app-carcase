@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_size">6dp</dimen>
+    <integer name="default_steps_count">3</integer>
+    <dimen name="default_step_margin">6dp</dimen>
+    <dimen name="default_border_width_active">2dp</dimen>
+    <dimen name="default_border_width_inactive">1dp</dimen>
+</resources>

@@ -13,8 +13,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.imogene.android.carcase.commons.util.AppUtils;
-
 /**
  * Created by Admin on 06.06.2017.
  */
@@ -29,12 +27,9 @@ public class CircleGuideStepView extends View implements GuideStepView {
     public static final int ANIMATION_FADE = 2;
     public static final int ANIMATION_BORDER_WIDTH = 3;
 
-    private static final int BORDER_WIDTH_ACTIVE_DEFAULT_DP = 2;
-    private static final int BORDER_WIDTH_INACTIVE_DEFAULT_DP = 1;
-
     private int size;
     private int stepsCount;
-    private int margins;
+    private int stepMargin;
     private int colorInactive;
     private int colorActive;
     private int styleInactive;
@@ -65,26 +60,14 @@ public class CircleGuideStepView extends View implements GuideStepView {
         try {
             size = array.getDimensionPixelSize(R.styleable.CircleGuideStepView_cgsv_size, 0);
             stepsCount = array.getInteger(R.styleable.CircleGuideStepView_cgsv_stepsCount, 0);
-            margins = array.getDimensionPixelSize(R.styleable.CircleGuideStepView_cgsv_margins, 0);
+            stepMargin = array.getDimensionPixelSize(R.styleable.CircleGuideStepView_cgsv_stepMargin, 0);
             colorInactive = array.getColor(R.styleable.CircleGuideStepView_cgsv_colorInactive, 0);
             colorActive = array.getColor(R.styleable.CircleGuideStepView_cgsv_colorActive, 0);
-            styleInactive = array.getInteger(R.styleable.CircleGuideStepView_cgsv_styleInactive, STYLE_FILLED);
-            styleActive = array.getInteger(R.styleable.CircleGuideStepView_cgsv_styleActive, STYLE_FILLED);
-            animationType = array.getInteger(R.styleable.CircleGuideStepView_cgsv_animation, ANIMATION_MOVE);
-
-            if(styleActive == STYLE_BORDERED){
-                borderWidthActive = array.getDimensionPixelSize(R.styleable.CircleGuideStepView_cgsv_borderWidthActive, 0);
-                if(borderWidthActive == 0){
-                    borderWidthActive = AppUtils.Graphics.convertDpsInPixels(context, BORDER_WIDTH_ACTIVE_DEFAULT_DP);
-                }
-            }
-
-            if(styleInactive == STYLE_BORDERED){
-                borderWidthInactive = array.getDimensionPixelSize(R.styleable.CircleGuideStepView_cgsv_borderWidthInactive, 0);
-                if(borderWidthInactive == 0){
-                    borderWidthInactive = AppUtils.Graphics.convertDpsInPixels(context, BORDER_WIDTH_INACTIVE_DEFAULT_DP);
-                }
-            }
+            styleInactive = array.getInteger(R.styleable.CircleGuideStepView_cgsv_styleInactive, 0);
+            styleActive = array.getInteger(R.styleable.CircleGuideStepView_cgsv_styleActive, 0);
+            animationType = array.getInteger(R.styleable.CircleGuideStepView_cgsv_animation, 0);
+            borderWidthActive = array.getDimensionPixelSize(R.styleable.CircleGuideStepView_cgsv_borderWidthActive, 0);
+            borderWidthInactive = array.getDimensionPixelSize(R.styleable.CircleGuideStepView_cgsv_borderWidthInactive, 0);
         }finally {
             array.recycle();
         }
@@ -95,6 +78,10 @@ public class CircleGuideStepView extends View implements GuideStepView {
     public void setSize(int size) {
         this.size = size;
         requestLayout();
+    }
+
+    public int getSize() {
+        return size;
     }
 
     @Override
@@ -108,9 +95,13 @@ public class CircleGuideStepView extends View implements GuideStepView {
         return stepsCount;
     }
 
-    public void setMargins(int margins) {
-        this.margins = margins;
+    public void setStepMargin(int stepMargin) {
+        this.stepMargin = stepMargin;
         requestLayout();
+    }
+
+    public int getStepMargin() {
+        return stepMargin;
     }
 
     public void setColorInactive(int colorInactive) {
@@ -118,9 +109,17 @@ public class CircleGuideStepView extends View implements GuideStepView {
         invalidate();
     }
 
+    public int getColorInactive() {
+        return colorInactive;
+    }
+
     public void setColorActive(int colorActive) {
         this.colorActive = colorActive;
         invalidate();
+    }
+
+    public int getColorActive() {
+        return colorActive;
     }
 
     public void setStyleInactive(int styleInactive) {
@@ -128,15 +127,31 @@ public class CircleGuideStepView extends View implements GuideStepView {
         invalidate();
     }
 
+    public int getStyleInactive() {
+        return styleInactive;
+    }
+
     public void setStyleActive(int styleActive) {
         this.styleActive = styleActive;
         invalidate();
+    }
+
+    public int getStyleActive() {
+        return styleActive;
     }
 
     public void setBorderWidthInactive(float borderWidthInactive) {
         this.borderWidthInactive = borderWidthInactive;
         if(styleInactive == STYLE_BORDERED){
             requestLayout();
+        }
+    }
+
+    public float getBorderWidthInactive() {
+        if(styleInactive == STYLE_BORDERED){
+            return borderWidthInactive;
+        } else {
+            return 0F;
         }
     }
 
@@ -147,33 +162,48 @@ public class CircleGuideStepView extends View implements GuideStepView {
         }
     }
 
+    public float getBorderWidthActive() {
+        if(styleActive == STYLE_BORDERED){
+            return borderWidthActive;
+        } else {
+            return 0F;
+        }
+    }
+
     @Override
-    public void setCurrentStep(int currentStep){
-        if(currentStep != this.currentStep){
-            if(currentStep >= stepsCount){
-                throw new IllegalArgumentException("Current step must be less than steps count");
+    public void setCurrentStep(int step){
+        if(step != currentStep){
+            if(step >= stepsCount){
+                throw new IllegalArgumentException(
+                        "Step must be less than steps count.");
             }
 
-            if(shouldAnimateCurrentStepChange()){
-                animateCurrentStepChange(currentStep);
-            }else {
-                this.currentStep = currentStep;
+            if(isAnimationEnabled()){
+                drawer.animate(step);
+            } else {
+                currentStep = step;
                 invalidate();
             }
         }
     }
 
-    private boolean shouldAnimateCurrentStepChange(){
-        return isAnimationEnabled();
+    @Override
+    public int getCurrentStep(){
+        return currentStep;
     }
 
-    private void animateCurrentStepChange(int newStep){
-        if(drawer == null){
-            prepareDrawer();
-        }
-        if(drawer != null){
-            drawer.animate(newStep);
-        }
+    @Override
+    public boolean isAnimationEnabled() {
+        return animationType != ANIMATION_NONE;
+    }
+
+    public void setAnimationType(int animationType) {
+        this.animationType = animationType;
+        prepareDrawer();
+    }
+
+    public int getAnimationType() {
+        return animationType;
     }
 
     private void prepareDrawer(){
@@ -191,7 +221,8 @@ public class CircleGuideStepView extends View implements GuideStepView {
                 drawer = new Drawer();
                 break;
             default:
-                throw new IllegalStateException("Unsupported animation type: " + animationType);
+                throw new IllegalStateException(
+                        "Unsupported animation type: " + animationType);
         }
     }
 
@@ -247,7 +278,7 @@ public class CircleGuideStepView extends View implements GuideStepView {
         }
 
         final void updateBounds(int step, RectF bounds){
-            bounds.left = step * size + step * margins;
+            bounds.left = step * size + step * stepMargin;
             bounds.right = bounds.left + size;
             bounds.top = 0;
             bounds.bottom = size;
@@ -266,7 +297,7 @@ public class CircleGuideStepView extends View implements GuideStepView {
             this.newStep = newStep;
 
             animator = createAnimator(newStep);
-            animator.addListener(listener);
+            animator.addListener(animatorListener);
             animator.addUpdateListener(this);
             animator.start();
         }
@@ -275,7 +306,7 @@ public class CircleGuideStepView extends View implements GuideStepView {
             return null;
         }
 
-        private final Animator.AnimatorListener listener = new AnimatorListenerAdapter() {
+        private final Animator.AnimatorListener animatorListener = new AnimatorListenerAdapter() {
 
             @Override
             public void onAnimationStart(Animator animation) {
@@ -299,7 +330,7 @@ public class CircleGuideStepView extends View implements GuideStepView {
         };
 
         @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
+        public final void onAnimationUpdate(ValueAnimator animation) {
             onUpdateProperty(animation);
             invalidate();
         }
@@ -460,21 +491,6 @@ public class CircleGuideStepView extends View implements GuideStepView {
     }
 
     @Override
-    public int getCurrentStep(){
-        return currentStep;
-    }
-
-    @Override
-    public boolean isAnimationEnabled() {
-        return animationType != ANIMATION_NONE;
-    }
-
-    public void setAnimation(int animationType) {
-        this.animationType = animationType;
-        prepareDrawer();
-    }
-
-    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         final int paddingLeft = getPaddingLeft();
         final int paddingRight = getPaddingRight();
@@ -483,7 +499,7 @@ public class CircleGuideStepView extends View implements GuideStepView {
 
         int width = paddingLeft + paddingRight;
         width += size * stepsCount;
-        width += margins * (stepsCount - 1);
+        width += stepMargin * (stepsCount - 1);
 
         maxBorderSize = 0;
         if(styleActive == STYLE_BORDERED){

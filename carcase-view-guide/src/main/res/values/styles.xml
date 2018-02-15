@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Widget.CircleGuideStepView">
-        <item name="cgsv_size">6dp</item>
-        <item name="cgsv_stepsCount">3</item>
-        <item name="cgsv_margins">6dp</item>
+        <item name="cgsv_size">@dimen/default_size</item>
+        <item name="cgsv_stepsCount">@integer/default_steps_count</item>
+        <item name="cgsv_stepMargin">@dimen/default_step_margin</item>
         <item name="cgsv_colorInactive">@android:color/holo_green_light</item>
         <item name="cgsv_colorActive">@android:color/holo_green_dark</item>
         <item name="cgsv_animation">move</item>
+        <item name="cgsv_borderWidthInactive">@dimen/default_border_width_inactive</item>
+        <item name="cgsv_borderWidthActive">@dimen/default_border_width_active</item>
     </style>
     <style name="Widget.CircleGuideStepView.Filled">
         <item name="cgsv_styleInactive">filled</item>
