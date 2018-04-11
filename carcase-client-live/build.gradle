@@ -28,7 +28,7 @@ ext {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "26.0.2"
+    buildToolsVersion "27.0.3"
 
 
     defaultConfig {
@@ -53,8 +53,8 @@ dokka {
 }
 
 dependencies {
-    compile project(':carcase-client')
-    compile "android.arch.lifecycle:livedata:1.1.0"
+    api project(':carcase-client')
+    api "android.arch.lifecycle:livedata:1.1.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 

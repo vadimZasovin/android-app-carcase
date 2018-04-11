@@ -26,7 +26,7 @@ ext {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "26.0.2"
+    buildToolsVersion "27.0.3"
 
 
     defaultConfig {
@@ -46,8 +46,8 @@ android {
 }
 
 dependencies {
-    compile project(':carcase-controller')
-    compile project(':carcase-view-guide')
+    api project(':carcase-controller')
+    api project(':carcase-view-guide')
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
