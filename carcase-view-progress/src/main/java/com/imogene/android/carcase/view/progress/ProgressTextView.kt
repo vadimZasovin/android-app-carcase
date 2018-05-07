@@ -180,15 +180,17 @@ class ProgressTextView @JvmOverloads constructor(
         super.onWindowFocusChanged(hasWindowFocus)
         if(autoStart && hasWindowFocus){
             start()
-        } else if(!hasWindowFocus && isStarted){
+        } else if(!hasWindowFocus){
             stop()
         }
     }
 
     fun start() {
-        isStarted = true
-        updateRepeatCount(ValueAnimator.INFINITE)
-        animators.start()
+        if(!isStarted){
+            isStarted = true
+            updateRepeatCount(ValueAnimator.INFINITE)
+            animators.start()
+        }
     }
 
     private fun updateRepeatCount(repeatCount: Int) {
@@ -198,8 +200,10 @@ class ProgressTextView @JvmOverloads constructor(
     }
 
     fun stop() {
-        isStarted = false
-        updateRepeatCount(0)
+        if(isStarted){
+            isStarted = false
+            updateRepeatCount(0)
+        }
     }
 
     private lateinit var collapseAnimator : ValueAnimator
