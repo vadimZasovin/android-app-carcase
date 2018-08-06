@@ -1,13 +1,11 @@
 package com.imogene.android.carcase.client;
 
-
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.imogene.android.carcase.commons.exception.RequestException;
 
 import java.io.IOException;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;

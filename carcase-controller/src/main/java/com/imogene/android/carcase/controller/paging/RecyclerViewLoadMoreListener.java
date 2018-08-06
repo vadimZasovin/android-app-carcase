@@ -1,7 +1,7 @@
 package com.imogene.android.carcase.controller.paging;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by vadim on 5/21/17.

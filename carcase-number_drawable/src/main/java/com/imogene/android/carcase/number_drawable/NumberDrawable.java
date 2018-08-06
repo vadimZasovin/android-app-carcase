@@ -12,7 +12,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import static com.imogene.android.carcase.commons.util.AppUtils.Commons.checkApiLevel;
 import static com.imogene.android.carcase.commons.util.AppUtils.Graphics.convertDpsInPixels;

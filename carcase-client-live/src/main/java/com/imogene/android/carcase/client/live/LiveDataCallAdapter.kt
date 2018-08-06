@@ -1,6 +1,6 @@
 package com.imogene.android.carcase.client.live
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import retrofit2.Call
 import retrofit2.CallAdapter
 import java.lang.reflect.Type

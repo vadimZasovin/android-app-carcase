@@ -1,7 +1,8 @@
 package com.imogene.android.carcase.controller;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by Admin on 12.04.2017.

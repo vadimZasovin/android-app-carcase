@@ -1,7 +1,6 @@
 package com.imogene.android.carcase.async.compound;
 
 import android.os.Bundle;
-import android.support.v4.util.SimpleArrayMap;
 import android.text.TextUtils;
 
 import com.imogene.android.carcase.async.NetworkAsyncTask;
@@ -12,6 +11,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.collection.SimpleArrayMap;
 
 /**
  * Created by Admin on 05.05.2017.

@@ -2,11 +2,12 @@ package com.imogene.android.carcase.async;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.StringRes;
 
 import com.imogene.android.carcase.commons.BaseApplication;
 
 import java.lang.ref.WeakReference;
+
+import androidx.annotation.StringRes;
 
 /**
  * Created by Admin on 14.04.2017.

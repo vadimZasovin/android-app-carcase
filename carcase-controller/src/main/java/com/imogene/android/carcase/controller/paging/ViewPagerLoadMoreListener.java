@@ -1,7 +1,7 @@
 package com.imogene.android.carcase.controller.paging;
 
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * Created by vadim on 5/21/17.

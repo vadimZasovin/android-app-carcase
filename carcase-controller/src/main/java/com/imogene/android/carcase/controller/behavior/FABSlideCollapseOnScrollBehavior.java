@@ -1,10 +1,10 @@
 package com.imogene.android.carcase.controller.behavior;
 
 import android.content.Context;
-import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.ViewPropertyAnimator;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * Created by Admin on 03.05.2017.

@@ -1,6 +1,5 @@
 package com.imogene.android.carcase.client;
 
-import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 
@@ -11,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.X509TrustManager;
 
+import androidx.annotation.NonNull;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

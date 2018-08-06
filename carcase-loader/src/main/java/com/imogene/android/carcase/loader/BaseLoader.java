@@ -1,8 +1,6 @@
 package com.imogene.android.carcase.loader;
 
 import android.content.Context;
-import android.support.annotation.StringRes;
-import android.support.v4.content.AsyncTaskLoader;
 import android.text.TextUtils;
 
 import com.imogene.android.carcase.commons.exception.RequestException;
@@ -10,6 +8,9 @@ import com.imogene.android.carcase.commons.exception.RuntimeSQLException;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
+import androidx.annotation.StringRes;
+import androidx.loader.content.AsyncTaskLoader;
 
 /**
  * Created by Admin on 13.04.2017.

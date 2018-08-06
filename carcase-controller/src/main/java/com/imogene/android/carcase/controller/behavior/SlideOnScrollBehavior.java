@@ -1,11 +1,11 @@
 package com.imogene.android.carcase.controller.behavior;
 
 import android.content.Context;
-import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 /**
  * Created by Admin on 13.04.2017.

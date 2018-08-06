@@ -1,10 +1,10 @@
 package com.imogene.android.carcase.client.live
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MediatorLiveData
-import android.arch.lifecycle.Observer
 import android.os.AsyncTask
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Observer
 
 /**
  * Created by Admin on 18.10.2017.

@@ -1,7 +1,7 @@
 package com.imogene.android.carcase.client.live
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.imogene.android.carcase.client.ApiCore
 import com.imogene.android.carcase.client.BaseApiManager
 import com.imogene.android.carcase.commons.exception.RequestException
