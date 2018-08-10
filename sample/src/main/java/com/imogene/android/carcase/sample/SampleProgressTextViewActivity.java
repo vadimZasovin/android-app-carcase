@@ -1,11 +1,12 @@
 package com.imogene.android.carcase.sample;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.imogene.android.carcase.view.progress.ProgressTextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by Vadim Zasovin on 26.12.17.

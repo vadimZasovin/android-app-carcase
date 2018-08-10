@@ -23,4 +23,5 @@ android {
 dependencies {
     implementation project(':carcase-controller-guide')
     implementation project(':carcase-view-progress')
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.2.60")
 }

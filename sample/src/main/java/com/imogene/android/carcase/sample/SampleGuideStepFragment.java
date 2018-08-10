@@ -1,11 +1,12 @@
 package com.imogene.android.carcase.sample;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
 import com.imogene.android.carcase.controller.BaseFragment;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by Admin on 06.06.2017.
