@@ -11,8 +11,8 @@ enum class Status{
     LOADING, SUCCESS, ERROR
 }
 
-data class Resource<out T> internal constructor(val status: Status, val source: Source,
-                                                val data: T?, val error: Throwable?){
+data class Resource<out T> (val status: Status, val source: Source,
+                            val data: T?, val error: Throwable?){
 
     companion object {
 
